@@ -1,0 +1,120 @@
+basePath: /api/v1
+definitions:
+  models.Book:
+    properties:
+      author:
+        type: string
+      id:
+        type: integer
+      releasedYear:
+        type: integer
+      title:
+        type: string
+    required:
+    - author
+    - id
+    - releasedYear
+    - title
+    type: object
+  models.Borrow:
+    properties:
+      bookId:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+    required:
+    - firstName
+    - id
+    - lastName
+    type: object
+info:
+  contact: {}
+  description: Swagger API for Golang Project Books.
+  termsOfService: http://swagger.io/terms/
+  title: Books API
+  version: "1.0"
+paths:
+  /book/{id}:
+    get:
+      parameters:
+      - description: Book Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Book'
+      summary: Get book
+  /borrow/:
+    delete:
+      parameters:
+      - description: Delete borrow
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.Borrow'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Delete borrow
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Borrow'
+            type: array
+      summary: Get all borrows
+    post:
+      parameters:
+      - description: Add borrow
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.Borrow'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Borrow'
+      summary: Add borrow
+  /user/{id}:
+    get:
+      parameters:
+      - description: User Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Get user
+swagger: "2.0"
